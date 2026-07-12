@@ -29,7 +29,8 @@ tailwind.config = { theme: { extend: { colors: {
       <span>INNECESARIAMENTE<br><span class="text-brand">NECESARIO</span></span>
     </a>
     <div class="hidden md:flex items-center gap-6 text-sm font-medium">
-      <a href="tienda.html" class="text-brand">Tienda</a>
+      <a href="tienda.html" class="sticker sticker-press px-4 py-1.5 font-display font-bold text-xs"
+         style="background:var(--brand); color:var(--bg); border-color:var(--bg); --tilt:-1deg">Tienda</a>
       <a href="index.html#quienes" class="hover:text-brand transition-colors">Quiénes somos</a>
       <a href="index.html#pedidos" class="hover:text-brand transition-colors">Pedidos realizados</a>
       <a href="index.html#contacto" class="hover:text-brand transition-colors">Contacto</a>
@@ -51,20 +52,25 @@ tailwind.config = { theme: { extend: { colors: {
 </header>
 
 <!-- ===================== CABECERA TIENDA ===================== -->
-<section class="max-w-6xl mx-auto px-4 pt-12 pb-8">
-  <p class="font-pixel text-xs mb-3" style="color:var(--pop)">EL INVENTARIO</p>
-  <h1 class="font-display font-black leading-tight" style="font-size:clamp(1.7rem, 1.1rem + 2.6vw, 3rem)">
-    Elige tu <span class="text-brand">drop</span>
-  </h1>
-  <p class="mt-3 max-w-xl leading-relaxed" style="color:var(--muted)">
-    Todo hecho a mano. Las piezas únicas no se reponen, y para encargos personalizados
-    el DM está siempre abierto.
-  </p>
+<section class="relative overflow-hidden">
+  <div class="blob" style="width:320px; height:320px; top:-90px; right:6%; background:var(--brand)" aria-hidden="true"></div>
+  <div class="max-w-6xl mx-auto px-4 pt-12 pb-8 relative z-10">
+    <p class="font-pixel text-xs mb-3" style="color:var(--pop)">EL INVENTARIO</p>
+    <h1 class="font-display font-black leading-tight" style="font-size:clamp(1.7rem, 1.1rem + 2.6vw, 3rem)">
+      Elige tu <span class="text-brand">drop</span>
+    </h1>
+    <p class="mt-3 max-w-xl leading-relaxed" style="color:var(--muted)">
+      Todo hecho a mano. Las piezas únicas no se reponen, y para encargos personalizados
+      el DM está siempre abierto.
+    </p>
+  </div>
 </section>
 
-<!-- ===================== FILTROS ===================== -->
-<section class="max-w-6xl mx-auto px-4 pb-6 flex flex-col gap-4">
-  <div class="sticker sticker-flat p-4 grid gap-4">
+<!-- ===================== FILTROS + GRID =====================
+     Comparten el mismo contenedor para que la barra de filtros
+     pueda quedarse pegada (sticky) mientras se recorre el inventario. -->
+<main class="max-w-6xl mx-auto px-4 pb-24">
+  <div class="filters-sticky sticker sticker-flat p-4 grid gap-4 mb-4">
     <div class="flex flex-col sm:flex-row sm:items-center gap-3">
       <label class="font-pixel text-[10px] w-24 shrink-0" style="color:var(--muted)" for="f-buscar">BUSCAR</label>
       <input id="f-buscar" type="search" placeholder="gato, holo, dragón..."
@@ -86,15 +92,13 @@ tailwind.config = { theme: { extend: { colors: {
       <div id="f-marcas" class="flex flex-wrap gap-2"></div>
     </div>
   </div>
-  <p id="grid-count" class="font-pixel text-[10px] px-1" style="color:var(--muted)"></p>
-</section>
+  <p id="grid-count" class="font-pixel text-[10px] px-1 mb-6" style="color:var(--muted)"></p>
 
-<!-- ===================== GRID ===================== -->
-<main class="max-w-6xl mx-auto px-4 pb-24">
-  <div id="grid" class="grid gap-6" style="grid-template-columns:repeat(auto-fill, minmax(240px, 1fr))"></div>
+  <div id="grid" class="bento-grid"></div>
 
   <!-- CTA encargo -->
-  <div class="mt-16 sticker sticker-violet p-8 text-center">
+  <div class="mt-16 relative overflow-hidden sticker sticker-violet p-8 text-center">
+    <div class="blob" style="width:260px; height:260px; top:-70px; left:-60px; background:var(--violet)" aria-hidden="true"></div>
     <h2 class="font-display font-bold text-lg">¿No ves lo que buscas?</h2>
     <p class="mt-2 max-w-md mx-auto text-sm leading-relaxed" style="color:var(--muted)">
       Casi todo lo de esta tienda empezó como el encargo de alguien.
@@ -173,6 +177,20 @@ tailwind.config = { theme: { extend: { colors: {
     <p class="text-xs mt-4 leading-relaxed" style="color:var(--muted)">
       Al confirmar te enviaré la solicitud de pago por PayPal. Sin pasarelas raras: tú y yo.
     </p>
+  </div>
+</div>
+
+<!-- ===================== VISTA RAPIDA (modal) ===================== -->
+<div id="qv-modal" class="hidden fixed inset-0 z-drawer grid place-items-center p-4" style="background:rgba(0,0,0,.65)">
+  <div class="sticker w-full max-w-2xl p-6 max-h-[90vh] overflow-y-auto cart-scroll" role="dialog" aria-modal="true" aria-label="Vista rápida del producto">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="font-display font-bold text-sm">VISTA RÁPIDA</h2>
+      <button class="chip" onclick="toggleQuickView(false)" aria-label="Cerrar">X</button>
+    </div>
+    <div class="grid sm:grid-cols-2 gap-6">
+      <div id="qv-media" class="aspect-square rounded-lg overflow-hidden sticker sticker-flat"></div>
+      <div id="qv-info" class="flex flex-col"></div>
+    </div>
   </div>
 </div>
 

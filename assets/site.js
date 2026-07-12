@@ -205,6 +205,99 @@ function toast(msg) {
   toastTimer = setTimeout(() => t.classList.add("opacity-0", "translate-y-3"), 2400);
 }
 
+/* ---------- vista rapida (modal) ---------- */
+function openQuickView(id) {
+  const p = PRODUCTOS.find(x => x.id === id);
+  const modal = $("#qv-modal");
+  if (!p || !modal) return;
+  const collab = p.marca !== SHOP.nombre;
+  const rare = p.rareza === "unica";
+  $("#qv-media").innerHTML = productImg(p);
+  $("#qv-info").innerHTML = `
+    <div class="flex flex-wrap gap-1.5">
+      <span class="chip pointer-events-none">${TIPOS[p.tipo]}</span>
+      ${collab ? `<span class="chip pointer-events-none" style="border-color:var(--violet);color:var(--violet)">COLLAB . ${p.marca.toUpperCase()}</span>` : ""}
+      ${rare ? `<span class="chip pointer-events-none" style="border-color:var(--pop);color:var(--pop)">PIEZA ÚNICA</span>` : ""}
+      ${p.nuevo ? `<span class="chip pointer-events-none" style="border-color:var(--brand);color:var(--brand)">NUEVO</span>` : ""}
+    </div>
+    <h3 class="font-display text-lg leading-snug mt-2">${p.nombre}</h3>
+    <p class="text-sm leading-relaxed mt-1" style="color:var(--muted)">${p.desc}</p>
+    <p class="font-pixel text-xl mt-3" style="color:var(--pop)">${money(p.precio)}</p>
+    <div class="mt-auto pt-4 flex flex-wrap gap-3">
+      <button class="sticker sticker-press px-5 py-2.5 font-display font-bold text-sm"
+              style="background:var(--brand); color:var(--bg); border-color:var(--bg)"
+              onclick="addToCart('${p.id}')">+ Añadir al carrito</button>
+      <a class="chip" href="https://ig.me/m/${SHOP.instagram}" target="_blank" rel="noopener">Preguntar por DM</a>
+    </div>`;
+  toggleQuickView(true);
+}
+
+function toggleQuickView(open) {
+  const m = $("#qv-modal");
+  if (!m) return;
+  m.classList.toggle("hidden", !open);
+}
+
+/* ---------- tarjeta de producto compartida (tienda + destacados) ----------
+   Cada 5o producto y toda pieza unica ocupa doble ancho (bento), y las
+   tarjetas se desplazan un poco arriba/abajo para romper la rejilla. */
+function cardSizeClass(p, i) {
+  if (p.rareza === "unica") return "bento-lg";
+  return (i % 5 === 2) ? "bento-lg" : "";
+}
+function staggerClass(i) {
+  const m = i % 3;
+  return m === 1 ? "stagger-down" : m === 2 ? "stagger-up" : "";
+}
+
+function productCard(p, i) {
+  const collab = p.marca !== SHOP.nombre;
+  const rare = p.rareza === "unica";
+  const big = cardSizeClass(p, i);
+  const tilt = ((i % 3) - 1) * 0.8;
+  return `
+  <article class="sticker sticker-press holo peel relative flex flex-col overflow-hidden
+                  ${rare ? "rarity-unica" : ""} ${collab && !rare ? "rarity-collab" : ""}
+                  ${big} ${staggerClass(i)}"
+           style="--tilt:${tilt}deg">
+    ${rare ? `<span class="ribbon" aria-hidden="true">ÚNICA</span>` : ""}
+    <div class="${big ? "aspect-[16/10]" : "aspect-square"} w-full qv-trigger" style="background:var(--surface-2)"
+         onclick="openQuickView('${p.id}')">${productImg(p)}</div>
+    <div class="p-4 flex flex-col gap-2 flex-1">
+      <div class="flex flex-wrap gap-1.5">
+        <span class="chip pointer-events-none">${TIPOS[p.tipo]}</span>
+        ${collab ? `<span class="chip pointer-events-none" style="border-color:var(--violet);color:var(--violet)">COLLAB . ${p.marca.toUpperCase()}</span>` : ""}
+        ${rare ? `<span class="chip pointer-events-none" style="border-color:var(--pop);color:var(--pop)">PIEZA ÚNICA</span>` : ""}
+        ${p.nuevo ? `<span class="chip pointer-events-none" style="border-color:var(--brand);color:var(--brand)">NUEVO</span>` : ""}
+      </div>
+      <h3 class="font-display text-sm leading-snug qv-trigger" onclick="openQuickView('${p.id}')">${p.nombre}</h3>
+      <p class="text-xs leading-relaxed" style="color:var(--muted)">${p.desc}</p>
+      <div class="mt-auto pt-2 flex items-center justify-between gap-2">
+        <span class="font-pixel text-base" style="color:var(--pop)">${money(p.precio)}</span>
+        <div class="flex gap-2">
+          <a class="chip" href="https://ig.me/m/${SHOP.instagram}" target="_blank" rel="noopener"
+             title="Pedir o preguntar por DM">DM</a>
+          <button class="chip on" onclick="addToCart('${p.id}')">+ CARRITO</button>
+        </div>
+      </div>
+    </div>
+  </article>`;
+}
+
+/* ---------- destacados (solo index.html) ---------- */
+function featuredProducts(n = 6) {
+  const nuevo = PRODUCTOS.filter(p => p.nuevo);
+  const unica = PRODUCTOS.filter(p => p.rareza === "unica" && !p.nuevo);
+  const resto = PRODUCTOS.filter(p => !p.nuevo && p.rareza !== "unica");
+  return [...nuevo, ...unica, ...resto].slice(0, n);
+}
+
+function renderFeatured() {
+  const grid = $("#featured-grid");
+  if (!grid) return;
+  grid.innerHTML = featuredProducts(6).map((p, i) => productCard(p, i)).join("");
+}
+
 /* ---------- filtros y grid (solo tienda.html) ---------- */
 const FILTER = { tipo: "todos", marca: "todas", q: "", orden: "reciente" };
 
@@ -253,34 +346,7 @@ function renderGrid() {
     return;
   }
 
-  grid.innerHTML = list.map((p, i) => {
-    const collab = p.marca !== SHOP.nombre;
-    const rare = p.rareza === "unica";
-    return `
-    <article class="sticker sticker-press holo peel flex flex-col overflow-hidden
-                    ${rare ? "rarity-unica" : ""} ${collab && !rare ? "rarity-collab" : ""}"
-             style="--tilt:${(i % 3 - 1) * 0.8}deg">
-      <div class="aspect-square w-full" style="background:var(--surface-2)">${productImg(p)}</div>
-      <div class="p-4 flex flex-col gap-2 flex-1">
-        <div class="flex flex-wrap gap-1.5">
-          <span class="chip pointer-events-none">${TIPOS[p.tipo]}</span>
-          ${collab ? `<span class="chip pointer-events-none" style="border-color:var(--violet);color:var(--violet)">COLLAB . ${p.marca.toUpperCase()}</span>` : ""}
-          ${rare ? `<span class="chip pointer-events-none" style="border-color:var(--pop);color:var(--pop)">PIEZA UNICA</span>` : ""}
-          ${p.nuevo ? `<span class="chip pointer-events-none" style="border-color:var(--brand);color:var(--brand)">NUEVO</span>` : ""}
-        </div>
-        <h3 class="font-display text-sm leading-snug">${p.nombre}</h3>
-        <p class="text-xs leading-relaxed" style="color:var(--muted)">${p.desc}</p>
-        <div class="mt-auto pt-2 flex items-center justify-between gap-2">
-          <span class="font-pixel text-base" style="color:var(--pop)">${money(p.precio)}</span>
-          <div class="flex gap-2">
-            <a class="chip" href="https://ig.me/m/${SHOP.instagram}" target="_blank" rel="noopener"
-               title="Pedir o preguntar por DM">DM</a>
-            <button class="chip on" onclick="addToCart('${p.id}')">+ CARRITO</button>
-          </div>
-        </div>
-      </div>
-    </article>`;
-  }).join("");
+  grid.innerHTML = list.map((p, i) => productCard(p, i)).join("");
 }
 
 /* ---------- arranque ---------- */
@@ -291,6 +357,7 @@ document.addEventListener("DOMContentLoaded", () => {
   updateCartUI();
   renderFilters();
   renderGrid();
+  renderFeatured();
   const q = $("#f-buscar");
   if (q) q.addEventListener("input", e => { FILTER.q = e.target.value.toLowerCase(); renderGrid(); });
   const o = $("#f-orden");

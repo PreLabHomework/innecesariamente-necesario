@@ -29,7 +29,8 @@ tailwind.config = { theme: { extend: { colors: {
       <span>INNECESARIAMENTE<br><span class="text-brand">NECESARIO</span></span>
     </a>
     <div class="hidden md:flex items-center gap-6 text-sm font-medium">
-      <a href="tienda.html" class="hover:text-brand transition-colors">Tienda</a>
+      <a href="tienda.html" class="sticker sticker-press px-4 py-1.5 font-display font-bold text-xs"
+         style="background:var(--brand); color:var(--bg); border-color:var(--bg); --tilt:-1deg">Tienda</a>
       <a href="#quienes" class="hover:text-brand transition-colors">Quiénes somos</a>
       <a href="#pedidos" class="hover:text-brand transition-colors">Pedidos realizados</a>
       <a href="#contacto" class="hover:text-brand transition-colors">Contacto</a>
@@ -44,7 +45,7 @@ tailwind.config = { theme: { extend: { colors: {
     </div>
   </nav>
   <div id="m-menu" class="hidden md:hidden border-t px-4 py-3 flex flex-col gap-3 text-sm" style="border-color:var(--line); background:var(--surface)">
-    <a href="tienda.html">Tienda</a>
+    <a href="tienda.html" class="font-display font-bold" style="color:var(--brand)">Tienda</a>
     <a href="#quienes" onclick="document.getElementById('m-menu').classList.add('hidden')">Quiénes somos</a>
     <a href="#pedidos" onclick="document.getElementById('m-menu').classList.add('hidden')">Pedidos realizados</a>
     <a href="#contacto" onclick="document.getElementById('m-menu').classList.add('hidden')">Contacto</a>
@@ -53,7 +54,9 @@ tailwind.config = { theme: { extend: { colors: {
 
 <!-- ===================== HERO: la hoja de pegatinas ===================== -->
 <section class="relative overflow-hidden">
-  <div class="max-w-6xl mx-auto px-4 pt-16 pb-20 sm:pt-24 sm:pb-28 grid lg:grid-cols-[1.1fr_.9fr] gap-12 items-center">
+  <div class="blob" style="width:380px; height:380px; top:-100px; right:10%; background:var(--brand)" aria-hidden="true"></div>
+  <div class="blob" style="width:280px; height:280px; bottom:-80px; left:2%; background:var(--pop)" aria-hidden="true"></div>
+  <div class="max-w-6xl mx-auto px-4 pt-16 pb-20 sm:pt-24 sm:pb-28 grid lg:grid-cols-[1.1fr_.9fr] gap-12 items-center relative z-10">
     <div>
       <p class="font-pixel text-xs mb-5 pop-in" style="color:var(--pop); --d:.05s">TIENDA HANDMADE . DROPS LIMITADOS</p>
       <h1 class="font-display font-black leading-[1.04] pop-in" style="font-size:clamp(2rem, 1.1rem + 4.2vw, 4.4rem); --d:.12s">
@@ -92,11 +95,37 @@ tailwind.config = { theme: { extend: { colors: {
   </div>
 
   <!-- marquee -->
-  <div class="marquee border-y py-3 font-pixel text-xs" style="border-color:var(--line); background:var(--surface)">
+  <div class="marquee relative z-10 border-y py-3 font-pixel text-xs" style="border-color:var(--line); background:var(--surface)">
     <div class="marquee-track">
       <span class="mx-6">HECHO A MANO</span><span class="mx-6 text-brand">NO SOLO IMPRESO</span><span class="mx-6" style="color:var(--pop)">PIEZAS ÚNICAS</span><span class="mx-6">ENCARGOS POR DM</span><span class="mx-6" style="color:var(--blue)">COLLABS ABIERTOS</span>
       <span class="mx-6">HECHO A MANO</span><span class="mx-6 text-brand">NO SOLO IMPRESO</span><span class="mx-6" style="color:var(--pop)">PIEZAS ÚNICAS</span><span class="mx-6">ENCARGOS POR DM</span><span class="mx-6" style="color:var(--blue)">COLLABS ABIERTOS</span>
     </div>
+  </div>
+</section>
+
+<div class="skew-bar" style="background:var(--brand)"></div>
+
+<!-- ===================== TIENDA DESTACADA ===================== -->
+<section id="tienda-preview" class="relative overflow-hidden py-20 sm:py-28" style="background:var(--surface)">
+  <div class="blob" style="width:420px; height:420px; top:-140px; left:-140px; background:var(--brand)" aria-hidden="true"></div>
+  <div class="blob" style="width:340px; height:340px; bottom:-120px; right:-100px; background:var(--violet)" aria-hidden="true"></div>
+  <div class="max-w-6xl mx-auto px-4 relative z-10">
+    <div class="flex items-end justify-between flex-wrap gap-6">
+      <div>
+        <p class="font-pixel text-xs mb-3" style="color:var(--pop)">LA TIENDA . EMPIEZA AQUÍ</p>
+        <h2 class="font-display font-bold leading-tight" style="font-size:clamp(1.6rem, 1rem + 2.4vw, 2.6rem)">
+          Lo último en <span class="text-brand">el inventario</span>
+        </h2>
+        <p class="mt-3 max-w-md leading-relaxed" style="color:var(--muted)">
+          Pide directo desde la web o escríbeme por Instagram para un encargo a medida.
+        </p>
+      </div>
+      <a href="tienda.html" class="sticker sticker-press px-6 py-3 font-display font-bold text-sm shrink-0"
+         style="background:var(--brand); color:var(--bg); border-color:var(--bg); --tilt:1deg">
+        Ver todo el inventario
+      </a>
+    </div>
+    <div id="featured-grid" class="bento-grid mt-12"></div>
   </div>
 </section>
 
@@ -119,21 +148,21 @@ tailwind.config = { theme: { extend: { colors: {
 
     <!-- proceso real de 3 pasos (es una secuencia de verdad) -->
     <ol class="grid gap-4">
-      <li class="sticker sticker-flat p-5 flex gap-4 items-start">
+      <li class="sticker sticker-press sticker-flat p-5 flex gap-4 items-start" style="--tilt:-1.3deg">
         <span class="font-pixel text-sm mt-1" style="color:var(--pop)">01</span>
         <div>
           <h3 class="font-display text-sm font-bold">Se dibuja</h3>
           <p class="text-sm mt-1 leading-relaxed" style="color:var(--muted)">Ilustración original, en papel o tablet. Nada de clipart ni plantillas.</p>
         </div>
       </li>
-      <li class="sticker sticker-flat p-5 flex gap-4 items-start">
+      <li class="sticker sticker-press sticker-flat p-5 flex gap-4 items-start" style="--tilt:.9deg">
         <span class="font-pixel text-sm mt-1" style="color:var(--pop)">02</span>
         <div>
           <h3 class="font-display text-sm font-bold">Se produce</h3>
           <p class="text-sm mt-1 leading-relaxed" style="color:var(--muted)">Prensado de chapas, corte de acrílico, impresión 3D. La máquina ayuda, no decide.</p>
         </div>
       </li>
-      <li class="sticker sticker-flat p-5 flex gap-4 items-start">
+      <li class="sticker sticker-press sticker-flat p-5 flex gap-4 items-start" style="--tilt:-.7deg">
         <span class="font-pixel text-sm mt-1" style="color:var(--pop)">03</span>
         <div>
           <h3 class="font-display text-sm font-bold">Se remata a mano</h3>
@@ -273,6 +302,20 @@ tailwind.config = { theme: { extend: { colors: {
     <p class="text-xs mt-4 leading-relaxed" style="color:var(--muted)">
       Al confirmar te enviaré la solicitud de pago por PayPal. Sin pasarelas raras: tú y yo.
     </p>
+  </div>
+</div>
+
+<!-- ===================== VISTA RAPIDA (modal) ===================== -->
+<div id="qv-modal" class="hidden fixed inset-0 z-drawer grid place-items-center p-4" style="background:rgba(0,0,0,.65)">
+  <div class="sticker w-full max-w-2xl p-6 max-h-[90vh] overflow-y-auto cart-scroll" role="dialog" aria-modal="true" aria-label="Vista rápida del producto">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="font-display font-bold text-sm">VISTA RÁPIDA</h2>
+      <button class="chip" onclick="toggleQuickView(false)" aria-label="Cerrar">X</button>
+    </div>
+    <div class="grid sm:grid-cols-2 gap-6">
+      <div id="qv-media" class="aspect-square rounded-lg overflow-hidden sticker sticker-flat"></div>
+      <div id="qv-info" class="flex flex-col"></div>
+    </div>
   </div>
 </div>
 
