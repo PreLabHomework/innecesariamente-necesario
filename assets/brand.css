@@ -1,0 +1,165 @@
+/* ============================================================
+   INNECESARIAMENTE NECESARIO . brand.css
+   PALETA PLACEHOLDER. Cuando llegue el logo definitivo,
+   cambia SOLO los valores de este bloque :root y todo el sitio
+   se actualiza (Tailwind lee estas variables).
+   ============================================================ */
+:root {
+  /* Paleta extraida del logo (mascara/pelo, camiseta, perlas, criaturas) */
+  --bg: #1d1226;          /* plum galaxia del fondo del logo */
+  --surface: #2b1c33;     /* paneles y tarjetas */
+  --surface-2: #3a2544;   /* hover / elevado */
+  --ink: #faf3e7;         /* crema de los brillos del logo */
+  --muted: #c2aec7;       /* texto secundario */
+  --brand: #e03246;       /* carmesi de la mascara y el pelo */
+  --brand-deep: #8f1420;  /* carmesi profundo para sombras duras */
+  --violet: #a865ad;      /* orquidea de la camiseta (collabs) */
+  --pop: #e5b85c;         /* dorado de las perlas del marco */
+  --blue: #b8d8ee;        /* azul de las criaturas, detalles puntuales */
+  --line: #4a3153;        /* bordes sutiles */
+  --sticker-edge: #faf3e7;/* borde tipo pegatina recortada */
+}
+
+/* ---------- base ---------- */
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Instrument Sans', system-ui, sans-serif;
+  font-size: clamp(1rem, 0.95rem + 0.3vw, 1.125rem);
+}
+.font-display { font-family: 'Unbounded', sans-serif; }
+.font-pixel   { font-family: 'Silkscreen', monospace; }
+
+h1, h2, h3 { text-wrap: balance; }
+p { text-wrap: pretty; max-width: 68ch; }
+
+::selection { background: var(--brand); color: var(--bg); }
+
+/* ---------- sticker cutout: el sello de la casa ----------
+   Todo elemento "recortado a mano" lleva borde claro + sombra
+   dura desplazada, como una pegatina sobre la mesa. */
+.sticker {
+  border: 2px solid var(--sticker-edge);
+  box-shadow: 5px 5px 0 var(--brand-deep);
+  border-radius: 14px;
+  background: var(--surface);
+}
+.sticker-violet { box-shadow: 5px 5px 0 var(--violet); }
+.sticker-flat   { box-shadow: none; }
+
+.sticker-press {
+  transition: transform .18s cubic-bezier(.22,1,.36,1),
+              box-shadow .18s cubic-bezier(.22,1,.36,1);
+}
+.sticker-press:hover {
+  transform: translate(-2px,-2px) rotate(-.4deg);
+  box-shadow: 8px 8px 0 var(--brand-deep);
+}
+.sticker-press:active {
+  transform: translate(3px,3px);
+  box-shadow: 1px 1px 0 var(--brand-deep);
+}
+
+/* ---------- rareza de los drops ---------- */
+.rarity-unica {
+  border-color: var(--pop);
+  box-shadow: 5px 5px 0 color-mix(in oklab, var(--pop) 55%, black);
+}
+.rarity-collab { border-color: var(--violet); box-shadow: 5px 5px 0 var(--violet); }
+
+/* brillo holo que barre la tarjeta al pasar el raton */
+.holo { position: relative; overflow: hidden; }
+.holo::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(115deg, transparent 42%,
+              rgba(255,255,255,.18) 50%, transparent 58%);
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+.holo:hover::after { animation: holo-sweep .7s cubic-bezier(.22,1,.36,1) forwards; }
+@keyframes holo-sweep { to { transform: translateX(120%); } }
+
+/* ---------- HUD chips (etiquetas pixel) ---------- */
+.chip {
+  font-family: 'Silkscreen', monospace;
+  font-size: .62rem;
+  letter-spacing: .02em;
+  padding: .3rem .55rem;
+  border: 1.5px solid var(--line);
+  border-radius: 6px;
+  color: var(--muted);
+  background: var(--bg);
+  cursor: pointer;
+  transition: all .15s ease-out;
+  user-select: none;
+}
+.chip:hover { border-color: var(--brand); color: var(--ink); }
+.chip.on {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: var(--bg);
+  box-shadow: 3px 3px 0 var(--brand-deep);
+}
+
+/* ---------- hero: hoja de pegatinas ---------- */
+.peel {
+  position: relative;
+}
+.peel::before {
+  content: '';
+  position: absolute; right: -6px; bottom: -6px;
+  width: 34px; height: 34px;
+  background: linear-gradient(135deg, transparent 50%, var(--surface-2) 50%);
+  border-radius: 0 0 14px 0;
+}
+.hero-float { animation: floaty 7s ease-in-out infinite; }
+.hero-float:nth-child(2n) { animation-delay: -2.4s; }
+.hero-float:nth-child(3n) { animation-delay: -4.8s; }
+@keyframes floaty {
+  0%,100% { transform: translateY(0) rotate(var(--tilt, -2deg)); }
+  50%     { transform: translateY(-9px) rotate(var(--tilt, -2deg)); }
+}
+
+/* entrada del hero */
+.pop-in { opacity: 0; transform: scale(.85) translateY(14px); }
+.loaded .pop-in {
+  animation: pop-in .55s cubic-bezier(.22,1.4,.36,1) forwards;
+  animation-delay: var(--d, 0s);
+}
+@keyframes pop-in { to { opacity: 1; transform: scale(1) translateY(0); } }
+
+/* ---------- marquee "hecho a mano" ---------- */
+.marquee { overflow: hidden; white-space: nowrap; }
+.marquee-track {
+  display: inline-block;
+  animation: marquee 26s linear infinite;
+}
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* ---------- scrollbar del carrito ---------- */
+.cart-scroll::-webkit-scrollbar { width: 8px; }
+.cart-scroll::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
+
+/* ---------- z-index semantico ---------- */
+.z-nav { z-index: 40; }
+.z-drawer-backdrop { z-index: 50; }
+.z-drawer { z-index: 60; }
+.z-toast { z-index: 70; }
+
+/* ---------- accesibilidad ---------- */
+:focus-visible {
+  outline: 3px solid var(--pop);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+  .pop-in { opacity: 1; transform: none; }
+  html { scroll-behavior: auto; }
+}
