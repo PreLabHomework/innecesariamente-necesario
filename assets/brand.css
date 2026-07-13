@@ -127,6 +127,17 @@ p { text-wrap: pretty; max-width: 68ch; }
 
 .qv-trigger { cursor: zoom-in; }
 
+/* ---------- carrusel enlazado de la portada (Explora) ---------- */
+.rail { overflow-x: auto; scrollbar-width: none; }
+.rail::-webkit-scrollbar { display: none; }
+.rail-track {
+  display: flex; gap: 1rem; width: max-content;
+  padding: 6px 1rem 12px;
+  animation: marquee 40s linear infinite;
+}
+.rail:hover .rail-track,
+.rail:focus-within .rail-track { animation-play-state: paused; }
+
 /* brillo holo que barre la tarjeta al pasar el raton */
 .holo { position: relative; overflow: hidden; }
 .holo::after {

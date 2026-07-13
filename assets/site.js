@@ -298,6 +298,40 @@ function renderFeatured() {
   grid.innerHTML = featuredProducts(6).map((p, i) => productCard(p, i)).join("");
 }
 
+/* ---------- carrusel enlazado (portada) ----------
+   Se genera solo: una tarjeta por tipo de producto (lleva a la tienda
+   ya filtrada por ese tipo), una por cada artista collab (lleva a la
+   tienda ya filtrada por esa marca), y accesos directos a reseñas
+   y contacto. Así "tocar una tarjeta" te lleva a esa parte de la web. */
+function renderCarousel() {
+  const rail = $("#rail-track");
+  if (!rail) return;
+  const cards = [];
+  Object.keys(TIPOS).forEach(t => {
+    const p = PRODUCTOS.find(x => x.tipo === t);
+    cards.push({ href: `tienda.html?tipo=${t}`, tag: "TIENDA", label: TIPOS[t], media: p ? productImg(p) : null });
+  });
+  marcas().filter(m => m !== SHOP.nombre).forEach(m => {
+    const p = PRODUCTOS.find(x => x.marca === m);
+    cards.push({ href: `tienda.html?marca=${encodeURIComponent(m)}`, tag: "ARTISTA", label: `Collab . ${m}`, media: p ? productImg(p) : null, violet: true });
+  });
+  cards.push({ href: "#pedidos", tag: "RESEÑAS", label: "Pedidos realizados", txt: "★★★★★" });
+  cards.push({ href: "#contacto", tag: "DM", label: "Encargos a medida", txt: "HOLA :)" });
+  const html = cards.map((c, i) => `
+    <a href="${c.href}" class="sticker sticker-press ${c.violet ? "sticker-violet" : ""} shrink-0 w-40 overflow-hidden"
+       style="--tilt:${((i % 3) - 1) * 0.7}deg">
+      <div class="h-24 grid place-items-center" style="background:var(--surface-2)">
+        ${c.media ? `<div class="w-20 h-20">${c.media}</div>`
+                  : `<span class="font-pixel text-sm" style="color:var(--pop)">${c.txt}</span>`}
+      </div>
+      <div class="p-3">
+        <p class="font-pixel text-[9px]" style="color:var(--muted)">${c.tag}</p>
+        <p class="font-display text-xs font-bold mt-1 leading-snug">${c.label}</p>
+      </div>
+    </a>`).join("");
+  rail.innerHTML = html + html; /* duplicado para el bucle infinito */
+}
+
 /* ---------- filtros y grid (solo tienda.html) ---------- */
 const FILTER = { tipo: "todos", marca: "todas", q: "", orden: "reciente" };
 
@@ -355,9 +389,17 @@ document.addEventListener("DOMContentLoaded", () => {
   $$("[data-ig]").forEach(a => a.href = `https://instagram.com/${SHOP.instagram}`);
   $$("[data-igdm]").forEach(a => a.href = `https://ig.me/m/${SHOP.instagram}`);
   updateCartUI();
+
+  /* enlaces profundos desde el carrusel: tienda.html?tipo=chapas o ?marca=Sama */
+  const params = new URLSearchParams(location.search);
+  const pt = params.get("tipo"), pm = params.get("marca");
+  if (pt && TIPOS[pt]) FILTER.tipo = pt;
+  if (pm && marcas().includes(pm)) FILTER.marca = pm;
+
   renderFilters();
   renderGrid();
   renderFeatured();
+  renderCarousel();
   const q = $("#f-buscar");
   if (q) q.addEventListener("input", e => { FILTER.q = e.target.value.toLowerCase(); renderGrid(); });
   const o = $("#f-orden");
