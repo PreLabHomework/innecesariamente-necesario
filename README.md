@@ -35,14 +35,14 @@ como filtro con todos sus productos.
 
 ## Cambiar los colores
 
-La paleta actual ya sale del logo (carmesí de la máscara, orquídea de la camiseta,
-dorado de las perlas, azul de las criaturas). Si algún día cambia el logo, solo hay
+La paleta actual sale del logo oficial (coral del aro, rubor del interior,
+negro de la tipografía y azul de la perla). Si algún día cambia el logo, solo hay
 que tocar el bloque `:root` al principio de `assets/brand.css`.
 Cambia los códigos de color y toda la web se actualiza sola. Los importantes:
 
 - `--brand`: el color principal del logo.
-- `--violet`: color secundario (collabs).
-- `--pop`: color de acento (precios, etiquetas).
+- `--brand-deep`: coral oscuro para precios y textos.
+- `--violet`: azul de los collabs.
 - `--bg`: color de fondo.
 
 ## Qué pedirle a Sama (lista exacta)
@@ -53,7 +53,7 @@ Para que el diseño quede a tu gusto y con los colores del logo, pídele:
    Una versión para fondo oscuro y otra para fondo claro.
 2. **Códigos de color exactos** del logo (los hex, tipo `#FF3D7F`). Mínimo el principal
    y uno o dos secundarios.
-3. **Fotos de producto**: cuadradas (1:1), mínimo 1000 x 1000 px, con fondo consistente
+3. **Fotos de producto**: cuadradas (1:1, la tienda las muestra a cuadrado completo), mínimo 1000 x 1000 px, con fondo consistente
    (misma mesa o mismo fondo en todas). Para figuras 3D, dos o tres ángulos.
 4. **Logo o nombre de cada marca collab** (el suyo propio, por ejemplo) y la lista
    de sus productos con precios.
