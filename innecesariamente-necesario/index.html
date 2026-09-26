@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Innecesariamente Necesario . Cosas hechas a mano</title>
+<meta name="description" content="Chapas, llaveros, espejos, pegatinas y figuras 3D hechas a mano. No solo impreso: cada pieza pasa por nuestras manos.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = { theme: { extend: { colors: {
+  bg: "var(--bg)", surface: "var(--surface)", surface2: "var(--surface-2)",
+  ink: "var(--ink)", muted: "var(--muted)", brand: "var(--brand)",
+  branddeep: "var(--brand-deep)", violet: "var(--violet)", pop: "var(--pop)", line: "var(--line)"
+}}}};
+</script>
+<link rel="icon" href="assets/img/logo.png">
+<link rel="stylesheet" href="assets/brand.css">
+</head>
+<body class="min-h-screen antialiased">
+
+<!-- ===================== NAV ===================== -->
+<header class="sticky top-0 z-nav border-b" style="background:color-mix(in oklab, var(--bg) 88%, transparent); backdrop-filter: blur(10px); border-color:var(--line)">
+  <nav class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
+    <a href="index.html" class="flex items-center gap-2.5 font-display font-black text-xs sm:text-sm leading-none">
+      <img src="assets/img/logo.png" alt="" class="w-10 h-10 shrink-0">
+      <span>INNECESARIAMENTE<br><span style="color:var(--brand-deep)">NECESARIO</span></span>
+    </a>
+    <div class="hidden md:flex items-center gap-6 text-sm font-medium">
+      <a href="tienda.html" class="hover:text-brand transition-colors">Tienda</a>
+      <a href="#quienes" class="hover:text-brand transition-colors">Quiénes somos</a>
+      <a href="#pedidos" class="hover:text-brand transition-colors">Pedidos realizados</a>
+      <a href="#contacto" class="hover:text-brand transition-colors">Contacto</a>
+    </div>
+    <div class="flex items-center gap-3">
+      <a data-igdm href="#" target="_blank" rel="noopener" class="chip hidden sm:inline-block">DM</a>
+      <button onclick="toggleCart(true)" class="relative sticker sticker-press px-3 py-2 text-sm font-semibold" aria-label="Abrir carrito">
+        Carrito
+        <span data-cart-badge class="hidden absolute -top-2 -right-2 font-pixel text-[10px] px-1.5 py-0.5 rounded-md" style="background:var(--brand-deep); color:#fff">0</span>
+      </button>
+      <button class="md:hidden chip" onclick="document.getElementById('m-menu').classList.toggle('hidden')" aria-label="Abrir menú">MENU</button>
+    </div>
+  </nav>
+  <div id="m-menu" class="hidden md:hidden border-t px-4 py-3 flex flex-col gap-3 text-sm" style="border-color:var(--line); background:var(--surface)">
+    <a href="tienda.html">Tienda</a>
+    <a href="#quienes" onclick="document.getElementById('m-menu').classList.add('hidden')">Quiénes somos</a>
+    <a href="#pedidos" onclick="document.getElementById('m-menu').classList.add('hidden')">Pedidos realizados</a>
+    <a href="#contacto" onclick="document.getElementById('m-menu').classList.add('hidden')">Contacto</a>
+  </div>
+</header>
+
+<!-- ===================== HERO: la hoja de pegatinas ===================== -->
+<section class="relative overflow-hidden">
+  <div class="max-w-6xl mx-auto px-4 pt-16 pb-20 sm:pt-24 sm:pb-28 grid lg:grid-cols-[1.1fr_.9fr] gap-12 items-center">
+    <div>
+      <p class="font-pixel text-xs mb-5 pop-in" style="color:var(--pop); --d:.05s">TIENDA HANDMADE . DROPS LIMITADOS</p>
+      <h1 class="font-display font-black leading-[1.04] pop-in" style="font-size:clamp(2rem, 1.1rem + 4.2vw, 4.4rem); --d:.12s">
+        Cosas que no necesitas.<br>
+        <span style="color:var(--brand-deep)">Hasta que las ves.</span>
+      </h1>
+      <p class="mt-6 text-base sm:text-lg leading-relaxed pop-in" style="color:var(--muted); --d:.22s">
+        Chapas, llaveros, espejos, pegatinas y figuras 3D. Todo pasa por nuestras manos:
+        se dibuja, se monta, se lija y se remata pieza a pieza. No solo impreso. Hecho.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-4 pop-in" style="--d:.32s">
+        <a href="tienda.html" class="sticker sticker-press px-6 py-3 font-display font-bold text-sm" style="background:var(--brand); color:var(--ink); border-color:var(--ink)">
+          Ver el inventario
+        </a>
+        <a data-igdm href="#" target="_blank" rel="noopener" class="sticker sticker-press sticker-violet px-6 py-3 font-display font-bold text-sm">
+          Encargo por DM
+        </a>
+      </div>
+    </div>
+
+    <!-- hoja de pegatinas flotante -->
+    <div class="relative h-72 sm:h-96 select-none" aria-hidden="true">
+      <div class="hero-float pop-in absolute left-[6%] top-[4%] w-28 h-28 sticker peel grid place-items-center" style="--tilt:-4deg; --d:.35s">
+        <svg viewBox="0 0 80 80" class="w-16 h-16"><circle cx="40" cy="40" r="26" fill="var(--brand)"/><circle cx="40" cy="40" r="26" fill="none" stroke="var(--ink)" stroke-width="2.5"/><ellipse cx="31" cy="30" rx="7" ry="4" fill="#fff" opacity=".5" transform="rotate(-30 31 30)"/></svg>
+      </div>
+      <div class="hero-float pop-in absolute right-[8%] top-[12%] w-32 h-32 sticker sticker-violet peel grid place-items-center" style="--tilt:3deg; --d:.45s">
+        <svg viewBox="0 0 80 80" class="w-20 h-20"><path d="M40 12 L62 25 L62 51 L40 64 L18 51 L18 25 Z" fill="var(--violet)" stroke="var(--ink)" stroke-width="2.5"/><path d="M40 12 L62 25 L40 38 L18 25 Z" fill="#fff" opacity=".22"/><circle cx="40" cy="25" r="3.5" fill="var(--pop)"/></svg>
+      </div>
+      <img src="assets/img/logo.png" alt="Logo de Innecesariamente Necesario" class="hero-float pop-in absolute left-[20%] bottom-[0%] w-44 h-44 sm:w-56 sm:h-56" style="--tilt:-3deg; --d:.55s; filter:drop-shadow(0 20px 24px rgba(120,50,40,.3))">
+      <div class="hero-float pop-in absolute right-[24%] bottom-[20%] w-24 h-24 sticker grid place-items-center" style="--tilt:6deg; --d:.65s">
+        <span class="font-pixel text-[10px] text-center leading-tight" style="color:var(--pop)">100%<br>A MANO</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- marquee -->
+  <div class="marquee border-y py-3 font-pixel text-xs" style="border-color:var(--line); background:var(--surface)">
+    <div class="marquee-track">
+      <span class="mx-6">HECHO A MANO</span><span class="mx-6" style="color:var(--brand-deep)">NO SOLO IMPRESO</span><span class="mx-6" style="color:var(--pop)">PIEZAS ÚNICAS</span><span class="mx-6">ENCARGOS POR DM</span><span class="mx-6 text-violet">COLLABS ABIERTOS</span>
+      <span class="mx-6">HECHO A MANO</span><span class="mx-6" style="color:var(--brand-deep)">NO SOLO IMPRESO</span><span class="mx-6" style="color:var(--pop)">PIEZAS ÚNICAS</span><span class="mx-6">ENCARGOS POR DM</span><span class="mx-6 text-violet">COLLABS ABIERTOS</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== EXPLORA (carrusel enlazado) ===================== -->
+<section aria-label="Explora la web" class="py-10 border-b" style="border-color:var(--line)">
+  <div class="max-w-6xl mx-auto px-4 mb-2 flex items-baseline justify-between gap-4">
+    <h2 class="font-display font-bold text-lg">Explora</h2>
+    <p class="font-pixel text-[10px]" style="color:var(--muted)">TOCA UNA TARJETA PARA IR</p>
+  </div>
+  <div class="rail" tabindex="0">
+    <div id="rail-track" class="rail-track"></div>
+  </div>
+</section>
+
+<!-- ===================== QUIÉNES SOMOS ===================== -->
+<section id="quienes" class="max-w-6xl mx-auto px-4 py-20 sm:py-28">
+  <div class="grid lg:grid-cols-[.9fr_1.1fr] gap-12 items-start">
+    <div>
+      <h2 class="font-display font-bold text-2xl sm:text-3xl leading-tight">Quiénes somos<br><span style="color:var(--brand-deep)">y qué hacemos</span></h2>
+      <p class="mt-6 leading-relaxed" style="color:var(--muted)">
+        Innecesariamente Necesario nace de una idea muy simple: las cosas pequeñas que te hacen
+        ilusión no tienen por qué salir de una máquina y ya. Aquí cada chapa, cada llavero y cada
+        figura se trabaja a mano, con sus horas, sus manchas de pintura y su punto imperfecto que
+        las hace tuyas de verdad.
+      </p>
+      <p class="mt-4 leading-relaxed" style="color:var(--muted)">
+        También abrimos la casa a collabs: artistas amigas como <span class="text-violet font-semibold">Sama</span>
+        venden sus diseños aquí bajo su propia marca, con la misma producción artesanal.
+      </p>
+    </div>
+
+    <!-- proceso real de 3 pasos (es una secuencia de verdad) -->
+    <ol class="grid gap-4">
+      <li class="sticker sticker-flat p-5 flex gap-4 items-start">
+        <span class="font-pixel text-sm mt-1" style="color:var(--pop)">01</span>
+        <div>
+          <h3 class="font-display text-sm font-bold">Se dibuja</h3>
+          <p class="text-sm mt-1 leading-relaxed" style="color:var(--muted)">Ilustración original, en papel o tablet. Nada de clipart ni plantillas.</p>
+        </div>
+      </li>
+      <li class="sticker sticker-flat p-5 flex gap-4 items-start">
+        <span class="font-pixel text-sm mt-1" style="color:var(--pop)">02</span>
+        <div>
+          <h3 class="font-display text-sm font-bold">Se produce</h3>
+          <p class="text-sm mt-1 leading-relaxed" style="color:var(--muted)">Prensado de chapas, corte de acrílico, impresión 3D. La máquina ayuda, no decide.</p>
+        </div>
+      </li>
+      <li class="sticker sticker-flat p-5 flex gap-4 items-start">
+        <span class="font-pixel text-sm mt-1" style="color:var(--pop)">03</span>
+        <div>
+          <h3 class="font-display text-sm font-bold">Se remata a mano</h3>
+          <p class="text-sm mt-1 leading-relaxed" style="color:var(--muted)">Lijado, pintura a pincel, sellado y montaje, pieza a pieza. Por eso no hay dos iguales.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ===================== PEDIDOS REALIZADOS ===================== -->
+<section id="pedidos" class="border-y py-20 sm:py-28" style="border-color:var(--line); background:var(--surface)">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="flex items-end justify-between flex-wrap gap-4">
+      <h2 class="font-display font-bold text-2xl sm:text-3xl leading-tight">Pedidos realizados</h2>
+      <p class="font-pixel text-xs" style="color:var(--pop)">MISIONES COMPLETADAS</p>
+    </div>
+    <p class="mt-4 max-w-xl leading-relaxed" style="color:var(--muted)">
+      Algunos encargos que ya están en manos de sus dueñas y dueños, con su reseña tal cual llegó.
+    </p>
+
+    <div class="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Para añadir un pedido real: duplica un <article> y cambia texto y foto -->
+      <article class="sticker sticker-press holo p-5 flex flex-col gap-3" style="--tilt:-1deg">
+        <div class="aspect-video rounded-lg overflow-hidden grid place-items-center" style="background:var(--surface-2)">
+          <span class="font-pixel text-[10px]" style="color:var(--muted)">FOTO DEL ENCARGO</span>
+        </div>
+        <p class="text-sm leading-relaxed">"Le pedí unas chapas para el cumple de mi mejor amiga y se notaba muchísimo que estaban hechas con cariño. Repetiré fijo."</p>
+        <footer class="mt-auto flex items-center justify-between">
+          <span class="text-xs font-semibold" style="color:var(--muted)">@clienta.feliz</span>
+          <span class="font-pixel text-xs" style="color:var(--pop)" aria-label="5 de 5 estrellas">★★★★★</span>
+        </footer>
+      </article>
+
+      <article class="sticker sticker-press holo p-5 flex flex-col gap-3" style="--tilt:1deg">
+        <div class="aspect-video rounded-lg overflow-hidden grid place-items-center" style="background:var(--surface-2)">
+          <span class="font-pixel text-[10px]" style="color:var(--muted)">FOTO DEL ENCARGO</span>
+        </div>
+        <p class="text-sm leading-relaxed">"La figura 3D de mi gato quedó igualita. Se nota la pintura a mano, es otra cosa comparado con lo que venden por ahí."</p>
+        <footer class="mt-auto flex items-center justify-between">
+          <span class="text-xs font-semibold" style="color:var(--muted)">@gato.supremo</span>
+          <span class="font-pixel text-xs" style="color:var(--pop)" aria-label="5 de 5 estrellas">★★★★★</span>
+        </footer>
+      </article>
+
+      <article class="sticker sticker-press holo p-5 flex flex-col gap-3 sm:col-span-2 lg:col-span-1" style="--tilt:-2deg">
+        <div class="aspect-video rounded-lg overflow-hidden grid place-items-center" style="background:var(--surface-2)">
+          <span class="font-pixel text-[10px]" style="color:var(--muted)">FOTO DEL ENCARGO</span>
+        </div>
+        <p class="text-sm leading-relaxed">"Encargué espejos personalizados para mi grupo de amigas y el trato por DM fue súper cercano. Todo llegó precioso y empaquetado a mano."</p>
+        <footer class="mt-auto flex items-center justify-between">
+          <span class="text-xs font-semibold" style="color:var(--muted)">@bff.squad</span>
+          <span class="font-pixel text-xs" style="color:var(--pop)" aria-label="5 de 5 estrellas">★★★★★</span>
+        </footer>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CONTACTO ===================== -->
+<section id="contacto" class="max-w-6xl mx-auto px-4 py-20 sm:py-28 text-center">
+  <h2 class="font-display font-bold text-2xl sm:text-3xl">¿Hablamos?</h2>
+  <p class="mt-4 max-w-lg mx-auto leading-relaxed" style="color:var(--muted)">
+    Encargos, dudas, collabs o simplemente enseñarme fotos de tu gato.
+    El trato directo es parte de la tienda: me escribes a mí, no a un bot.
+  </p>
+  <a data-igdm href="#" target="_blank" rel="noopener"
+     class="mt-8 inline-block sticker sticker-press px-8 py-4 font-display font-bold text-sm"
+     style="background:var(--brand); color:var(--ink); border-color:var(--ink)">
+    Escríbeme por Instagram
+  </a>
+  <p class="mt-4 font-pixel text-xs" style="color:var(--muted)">RESPONDO EN PERSONA . DE VERDAD</p>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="border-t py-10" style="border-color:var(--line); background:var(--surface)">
+  <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm" style="color:var(--muted)">
+    <p class="font-display font-bold text-ink">INNECESARIAMENTE <span class="text-brand">NECESARIO</span></p>
+    <div class="flex gap-6">
+      <a href="tienda.html" class="hover:text-brand transition-colors">Tienda</a>
+      <a data-ig href="#" target="_blank" rel="noopener" class="hover:text-brand transition-colors">Instagram</a>
+    </div>
+    <p class="text-xs">Hecho a mano, también esta web.</p>
+  </div>
+</footer>
+
+<!-- ===================== CARRITO (drawer) ===================== -->
+<div id="cart-backdrop" class="hidden fixed inset-0 z-drawer-backdrop" style="background:rgba(40,20,18,.4)" onclick="toggleCart(false)"></div>
+<aside id="cart-drawer" class="fixed top-0 right-0 h-full w-full max-w-sm z-drawer translate-x-full transition-transform duration-300 flex flex-col border-l"
+       style="background:var(--surface); border-color:var(--line)" aria-label="Carrito">
+  <div class="p-5 flex items-center justify-between border-b" style="border-color:var(--line)">
+    <h2 class="font-display font-bold text-sm">TU INVENTARIO</h2>
+    <button class="chip" onclick="toggleCart(false)" aria-label="Cerrar carrito">X</button>
+  </div>
+  <div id="cart-items" class="flex-1 overflow-y-auto cart-scroll px-5"></div>
+  <div class="p-5 border-t flex flex-col gap-3" style="border-color:var(--line)">
+    <div class="flex justify-between font-semibold">
+      <span>Total</span><span id="cart-total" class="font-pixel" style="color:var(--pop)">0,00 €</span>
+    </div>
+    <button id="btn-checkout" onclick="toggleCheckout(true)" disabled
+            class="sticker sticker-press w-full py-3 font-display font-bold text-sm disabled:opacity-40 disabled:pointer-events-none"
+            style="background:var(--brand); color:var(--ink); border-color:var(--ink)">
+      Hacer pedido
+    </button>
+    <p class="text-xs text-center leading-relaxed" style="color:var(--muted)">
+      El pago se hace por PayPal tras confirmar el pedido por email o DM.
+    </p>
+  </div>
+</aside>
+
+<!-- ===================== CHECKOUT (modal) ===================== -->
+<div id="checkout-modal" class="hidden fixed inset-0 z-drawer grid place-items-center p-4" style="background:rgba(40,20,18,.45)">
+  <div class="sticker w-full max-w-lg p-6 max-h-[90vh] overflow-y-auto cart-scroll" role="dialog" aria-modal="true" aria-label="Finalizar pedido">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="font-display font-bold text-sm">FINALIZAR PEDIDO</h2>
+      <button class="chip" onclick="toggleCheckout(false)" aria-label="Cerrar">X</button>
+    </div>
+    <label class="block text-sm font-semibold mb-1" for="co-nombre">Tu nombre</label>
+    <input id="co-nombre" type="text" class="w-full rounded-lg px-3 py-2 text-sm mb-3 border outline-none focus:border-brand"
+           style="background:var(--bg); border-color:var(--line)" placeholder="Para saber quién eres">
+    <label class="block text-sm font-semibold mb-1" for="co-notas">Notas (colores, personalización, dirección...)</label>
+    <textarea id="co-notas" rows="3" class="w-full rounded-lg px-3 py-2 text-sm mb-4 border outline-none focus:border-brand"
+              style="background:var(--bg); border-color:var(--line)" placeholder="Cuéntame lo que necesites"
+              oninput="document.getElementById('co-resumen').textContent = orderText()"></textarea>
+    <p class="text-sm font-semibold mb-1">Resumen</p>
+    <pre id="co-resumen" class="text-xs rounded-lg p-3 mb-5 whitespace-pre-wrap border" style="background:var(--bg); border-color:var(--line); color:var(--muted)"></pre>
+    <div class="grid gap-3">
+      <button onclick="checkoutEmail()" class="sticker sticker-press w-full py-3 font-display font-bold text-sm"
+              style="background:var(--brand); color:var(--ink); border-color:var(--ink)">
+        Enviar pedido por email
+      </button>
+      <button onclick="checkoutIG()" class="sticker sticker-press sticker-violet w-full py-3 font-display font-bold text-sm">
+        Prefiero pedirlo por DM
+      </button>
+      <button onclick="copyOrder()" class="chip w-full py-2">COPIAR RESUMEN</button>
+    </div>
+    <p class="text-xs mt-4 leading-relaxed" style="color:var(--muted)">
+      Al confirmar te enviaré la solicitud de pago por PayPal. Sin pasarelas raras: tú y yo.
+    </p>
+  </div>
+</div>
+
+<!-- toast -->
+<div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-toast px-4 py-2 rounded-lg font-pixel text-xs opacity-0 translate-y-3 transition-all duration-300"
+     style="background:var(--brand-deep); color:#fff"></div>
+
+<script src="assets/config.js"></script>
+<script src="assets/products.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>
